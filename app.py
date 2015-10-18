@@ -3,8 +3,10 @@ from flask.ext.sqlalchemy import SQLAlchemy
 import json
 from flask import Flask, jsonify
 from flask import request
+from flask.ext.cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://youtuber:youtuber@localhost:5432/youtuber'
 db = SQLAlchemy(app)
 
@@ -31,7 +33,7 @@ class YoutubeLink(db.Model):
 @app.route("/youtube_links", methods=['GET'])
 def index():
 	links = YoutubeLink.query
-	return jsonify(youtube_links=[l.to_json for l in links.all()])
+	return json.dumps([l.to_json for l in links.all()])
 
 @app.route("/youtube_links", methods=['POST'])
 def create():
