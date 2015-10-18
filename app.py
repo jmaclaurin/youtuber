@@ -1,5 +1,8 @@
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
+import json
+from flask import Flask, jsonify
+from flask import request
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://youtuber:youtuber@localhost:5432/youtuber'
@@ -27,23 +30,36 @@ class YoutubeLink(db.Model):
 
 @app.route("/youtube_links", methods=['GET'])
 def index():
-	return "index"
+	links = YoutubeLink.query
+	return jsonify(youtube_links=[l.to_json for l in links.all()])
 
 @app.route("/youtube_links", methods=['POST'])
 def create():
-	return "create"
+	youtube_link = YoutubeLink(request.json.get('url'), request.json.get('title'), request.json.get('description'))
+	db.session.add(youtube_link)
+	db.session.commit()
+	return jsonify(youtube_link.to_json)
 
 @app.route("/youtube_links/<int:youtube_link_id>", methods=['GET'])
 def show(youtube_link_id):
-	return 'show'
+	youtube_link = YoutubeLink.query.get(youtube_link_id)
+	return jsonify(youtube_link.to_json)
 
 @app.route("/youtube_links/<int:youtube_link_id>", methods=['PUT'])
 def update(youtube_link_id):
-	return'update'
+	youtube_link = YoutubeLink.query.get(youtube_link_id)
+	youtube_link.url = request.json.get('url')
+	youtube_link.title = request.json.get('title')
+	youtube_link.description = request.json.get('description')	
+	db.session.commit()
+	return jsonify(youtube_link.to_json)
 
 @app.route("/youtube_links/<int:youtube_link_id>", methods=['DELETE'])
 def delete(youtube_link_id):
-	return 'delete'
+	youtube_link = YoutubeLink.query.get(youtube_link_id)
+	db.session.delete(youtube_link)
+	db.session.commit()
+	return ''
 
 db.create_all()
 
