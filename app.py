@@ -18,6 +18,13 @@ class YoutubeLink(db.Model):
 		self.title = title
 		self.description = description
 
+	@property	
+	def to_json(self):
+		return {'id':self.id,
+		'url':self.url,
+		'title':self.title,
+		'description':self.description}
+
 @app.route("/youtube_links", methods=['GET'])
 def index():
 	return "index"
