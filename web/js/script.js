@@ -13,9 +13,19 @@ youtuber.config(function($routeProvider){
 youtuber.factory('youtubeLinksFactory', ['$http', function($http){
 	var factory = {}
 	var urlBase = 'http://localhost:5000/'
+
 	factory.getYoutubeLinks = function(){
 		return $http.get(urlBase + 'youtube_links');
 	};
+
+	factory.getYoutubeLink = function(id){
+
+	};
+
+	factory.insertYoutubeLink = function(){
+
+	};
+
 	return factory;
 }]);
 
@@ -34,5 +44,13 @@ youtuber.controller('YoutubeLinksController', ['$scope', 'youtubeLinksFactory', 
             .error(function(error){
                 $scope.status = 'Unable to load youtube links data: ' + error.message;
             });
-    }
+    };
+
+    $scope.getYoutubeLink = function(id){
+
+    };
+
+    $scope.insertYoutubeLink = function(){
+
+    };
 }]);
