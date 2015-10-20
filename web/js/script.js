@@ -11,19 +11,27 @@ youtuber.config(function($routeProvider){
 });
 
 youtuber.factory('youtubeLinksFactory', ['$http', function($http){
-	var factory = {}
-	var urlBase = 'http://localhost:5000/'
+	var factory = {};
+	var urlBase = 'http://localhost:5000/';
 
 	factory.getYoutubeLinks = function(){
 		return $http.get(urlBase + 'youtube_links');
 	};
 
 	factory.getYoutubeLink = function(id){
-
+		return $http.get(urlBase + 'youtube_links/' + id);
 	};
 
-	factory.insertYoutubeLink = function(){
+	factory.saveYoutubeLink = function(youtubeLink){
+		return $http.post(urlBase + 'youtube_links', youtubeLink);
+	};
 
+	factory.deleteYoutubeLink = function(id){
+		return $http.delete(urlBase + 'youtube_links/' + id);
+	};
+
+	factory.updateYoutubeLink = function(youtubeLink){
+		return $http.put(urlBase + 'youtube_links/' + youtubeLink.id, youtubeLink)
 	};
 
 	return factory;
@@ -50,7 +58,11 @@ youtuber.controller('YoutubeLinksController', ['$scope', 'youtubeLinksFactory', 
 
     };
 
-    $scope.insertYoutubeLink = function(){
-
+    $scope.saveYoutubeLink = function(){
+    	youtubeLinksFactory.saveYoutubeLink($scope.youtubeLink).success(function(){
+    		// Do some stuff
+    	}).error(function(error){
+    		// Do some stuff
+    	});
     };
 }]);
