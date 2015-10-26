@@ -7,33 +7,29 @@
 	</head>
 	<body>
 		<h1>Hello World</h1>
-		<div ng-view>
-			
-		</div>
-	</body>	
+		<a href="#/" class="btn btn-default" role="button">Home</a>
+		<a href="#/new" class="btn btn-default" role="button">New</a>
+		<div ng-view></div>
+	</body>
 </html>
 <script src="js/angular.min.js"></script>
 <script src="js/angular-route.min.js"></script>
 <script src="js/script.js"></script>
 
-<script type="text/ng-template" id="new.html">
-	<form>
-
-	</form>
-</script>
-
 <script type="text/ng-template" id="list.html">
 	<table class="table">
 		<tr ng-repeat="link in youtube_links">
 			<td>{{ link.id }}</td>
-			<td>{{ link.url }}</td>
-			<td>{{ link.title }}</td>
+			<td><a href="{{ link.url }}">{{ link.title }}</a></td>
 			<td>{{ link.description }}</td>
+			<td><a href="#/edit/{{link.id}}">Edit</a></td>
+			<td><a href="#/delete/{{link.id}}">Delete</a><td>
 		</tr>
 	</table>
 </script>
 
-<script type="text/ng-template" id="new.html">
+<script type="text/ng-template" id="form.html">
+    <div>{{ $scope.youtubeLink }}</div>
 	<div class="col-md-4 col-md-offset-4">
 		<from>
 			<div class="form-group">
