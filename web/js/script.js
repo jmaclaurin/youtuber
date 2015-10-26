@@ -78,14 +78,18 @@ youtuber.controller('YoutubeLinksController', ['$scope', '$routeParams', '$locat
     $scope.saveYoutubeLink = function(){
     	youtubeLinksFactory.saveYoutubeLink($scope.youtubeLink).success(function(){
     		$scope.status = 'Successfully saved youtube link';
-    		$location.path('/');
+    		$location.path('#/');
     	}).error(function(error){
     		$scope.status = 'Unable to save youtube link: ' + error.message; 
-    		// Do some stuff
     	});
     };
 
-    $scope.removeYoutubeLink = function(){
-
+    $scope.removeYoutubeLink = function(youtubeLinkId){
+    	youtubeLinksFactory.deleteYoutubeLink(youtubeLinkId).success(function(){
+    		$scope.status = 'Successfully removed youtube link';
+    		$location.path('#/');
+    	}).error(function(error){
+    		$scope.status = 'Unable to delete youtube link: ' + error.message; 
+    	});
     };
 }]);

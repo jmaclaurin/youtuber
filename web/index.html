@@ -23,7 +23,7 @@
 			<td><a href="{{ link.url }}">{{ link.title }}</a></td>
 			<td>{{ link.description }}</td>
 			<td><a href="#/edit/{{link.id}}">Edit</a></td>
-			<td><a href="#/delete/{{link.id}}">Delete</a><td>
+			<td><a href="#/" ng-click="removeYoutubeLink(link.id);">Delete</a><td>
 		</tr>
 	</table>
 </script>
